@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c26704ff452de1b498faec4b5873ccae
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - GrabbedObject: {fileID: 5210610230318987702, guid: af6fc6f9078e91549b4313cfb43d7bd8, type: 3}
+  - mainCam: {instanceID: 0}
+  - _lineRender: {instanceID: 0}
+  - _distance: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
