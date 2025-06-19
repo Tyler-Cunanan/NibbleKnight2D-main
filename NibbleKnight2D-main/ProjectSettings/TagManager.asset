@@ -13,6 +13,7 @@ TagManager:
   - EnemyNPC
   - PortalStandingPipe
   - PortalWallDoorPipe
+  - action
   layers:
   - Default
   - TransparentFX
