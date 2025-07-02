@@ -25,10 +25,12 @@ public class NPCScript : MonoBehaviour
 
     public string m_TalkingDialog;
 
+    public AiMovement aiMovementScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        aiMovementScript = GetComponent<AiMovement>();
     }
 
     // Update is called once per frame
@@ -40,33 +42,35 @@ public class NPCScript : MonoBehaviour
     //     // }
     // }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         //Player collides with NPC
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player ran into NPC.");
+            aiMovementScript.enabled = false;
+
             //Is the quest already completed.
-            if(m_isFinished)
+            if (m_isFinished)
             {
                 m_TextBubble.SetActive(true);
                 m_Text.text = m_FinishedDialog;
                 return;
             }
             //If NPC has an quest to give to the player.
-            else if(m_hasObjective && !m_TextBubble.activeInHierarchy)
+            else if (m_hasObjective && !m_TextBubble.activeInHierarchy)
             {
                 SwissInventoryScript m_inv = collision.gameObject.GetComponent<SwissInventoryScript>();
                 m_TextBubble.SetActive(true);
                 //Not enough coins collected.
-                if(m_inv.GetCoinsCollected() < m_numOfPointsNeeded)
+                if (m_inv.GetCoinsCollected() < m_numOfPointsNeeded)
                 {
                     // Debug.Log(m_NotEnoughDialog);
                     m_Text.text = m_NotEnoughDialog;
                     // Debug.Log("Current coin count: " + m_inv.GetCoinsCollected() + " Needed coin count: " + m_numOfPointsNeeded);
                 }
                 //Complete the quest.
-                else 
+                else
                 {
                     m_inv.SubtractCoins(m_numOfPointsNeeded);
                     m_Text.text = m_QuestDialog;
@@ -80,7 +84,7 @@ public class NPCScript : MonoBehaviour
                 }
             }
             //NPC has only a talking bubble.
-            else if(!m_hasObjective)
+            else if (!m_hasObjective)
             {
                 m_TextBubble.SetActive(true);
                 m_Text.text = m_TalkingDialog;
@@ -89,12 +93,12 @@ public class NPCScript : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if(m_TextBubble != null && m_TextBubble.activeInHierarchy)
+        if (m_TextBubble != null && m_TextBubble.activeInHierarchy)
         {
             m_TextBubble.SetActive(false);
+            aiMovementScript.enabled = true;
         }
     }
-    
 }
