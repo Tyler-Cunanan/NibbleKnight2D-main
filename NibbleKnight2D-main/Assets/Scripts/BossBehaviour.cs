@@ -1,47 +1,50 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossBehaviour : MonoBehaviour
 {
+    public enum BossState
+    {
+        Idle,
+        Dashing,
+        Cooldown
+    }
+
+    private BossState currentState = BossState.Idle;
+
     [Header("Zone Settings")]
     public Vector2 boxSize = new Vector2(5f, 5f);
-    public Color boxColor = new Color(0f, 1f, 0f, 0.25f);  // Default: translucent green
-    // LayerMask to filter objects (optional)
+    public Color boxColor = new Color(0f, 1f, 0f, 0.25f);
     public LayerMask detectionLayer;
 
     [Header("Dash Settings")]
     public float dashDistance = 3f;
     public float dashSpeed = 10f;
-    private bool isDashing = false;
+    public float dashCooldown = 2f;
+
     private Vector3 dashStart;
     private Vector3 dashTarget;
-    public float dashCooldown = 2f; // Time in seconds before the next dash
     private float cooldownTimer = 0f;
 
-    void Start()
-    {
-        
-    }
+    //[Header("Optional Components")]
+    //public Animator animator;
+    //public AudioSource dashSound;
 
     void Update()
     {
-        if (isDashing)
+        switch (currentState)
         {
-            DashBackward();
-        }
-        else
-        {
-            // Update cooldown timer if needed
-            if (cooldownTimer > 0f)
-            {
-                cooldownTimer -= Time.deltaTime;
-            }
-            else
-            {
+            case BossState.Idle:
                 CheckZone();
-            }
+                break;
+
+            case BossState.Dashing:
+                DashBackward();
+                break;
+
+            case BossState.Cooldown:
+                HandleCooldown();
+                break;
         }
     }
 
@@ -58,12 +61,20 @@ public class BossBehaviour : MonoBehaviour
 
     void StartDash()
     {
-        isDashing = true;
+        currentState = BossState.Dashing;
         dashStart = transform.position;
+        Vector3 dashDirection = -transform.right;
+        dashTarget = dashStart + dashDirection * dashDistance;
 
-        // Dash backward relative to this object's local right direction
-        Vector3 backward = -transform.right * dashDistance;
-        dashTarget = dashStart + backward;
+        //if (animator != null)
+        //{
+        //    animator.SetTrigger("Dash");
+        //}
+
+        //if (dashSound != null)
+        //{
+        //    dashSound.Play();
+        //}
     }
 
     void DashBackward()
@@ -72,8 +83,29 @@ public class BossBehaviour : MonoBehaviour
 
         if (Vector3.Distance(transform.position, dashTarget) < 0.01f)
         {
-            isDashing = false;
+            currentState = BossState.Cooldown;
+            cooldownTimer = dashCooldown;
         }
+    }
+
+    void HandleCooldown()
+    {
+        cooldownTimer -= Time.deltaTime;
+
+        if (cooldownTimer <= 0f)
+        {
+            currentState = BossState.Idle;
+        }
+    }
+
+    void FaceTarget(Vector3 targetPosition)
+    {
+        Vector3 direction = targetPosition - transform.position;
+
+        if (direction.x > 0)
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        else
+            transform.localScale = new Vector3(-1f, 1f, 1f);
     }
 
     void OnDrawGizmos()
@@ -82,8 +114,16 @@ public class BossBehaviour : MonoBehaviour
         Gizmos.DrawCube(transform.position, boxSize);
 
         Color wireColor = boxColor;
-        wireColor.a = 1f; // Full opacity for wireframe
+        wireColor.a = 1f;
         Gizmos.color = wireColor;
         Gizmos.DrawWireCube(transform.position, boxSize);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Vector3 dashDirection = -transform.right;
+        Vector3 previewTarget = transform.position + dashDirection * dashDistance;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, previewTarget);
     }
 }
