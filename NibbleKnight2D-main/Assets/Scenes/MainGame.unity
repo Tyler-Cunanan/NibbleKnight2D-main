@@ -9275,7 +9275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 439664283}
   - component: {fileID: 439664284}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GrapplingGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32504,7 +32504,7 @@ GameObject:
   - component: {fileID: 1270672715}
   - component: {fileID: 1270672714}
   - component: {fileID: 1270672717}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Drop Object
   m_TagString: Object
   m_Icon: {fileID: 0}
@@ -33084,7 +33084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1389091782}
   - component: {fileID: 1389091783}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GunPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34649,14 +34649,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7531edd9d12daae44882f300cf632537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxSize: {x: 5, y: 5}
+  boxSize: {x: 10, y: 6}
   boxColor: {r: 0, g: 1, b: 0, a: 0.25}
   detectionLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   dashDistance: 3
   dashSpeed: 10
   dashCooldown: 2
+  playerMouse: {fileID: 32978715172035550}
 --- !u!1 &1811385450
 GameObject:
   m_ObjectHideFlags: 0
@@ -44368,7 +44369,7 @@ GameObject:
   - component: {fileID: 2995081589812295595}
   - component: {fileID: 390714424797328442}
   - component: {fileID: 2454663769616996137}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SwissInfo (Player, Layer 10)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -44983,7 +44984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1856782157820503560}
   - component: {fileID: 5922681121683047001}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BackgroundMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

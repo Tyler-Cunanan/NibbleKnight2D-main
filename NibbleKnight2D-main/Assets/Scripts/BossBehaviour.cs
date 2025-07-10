@@ -6,6 +6,7 @@ public class BossBehaviour : MonoBehaviour
     public enum BossState
     {
         Idle,
+        Moving,
         Dashing,
         Cooldown
     }
@@ -15,7 +16,7 @@ public class BossBehaviour : MonoBehaviour
     [Header("Zone Settings")]
     public Vector2 boxSize = new Vector2(5f, 5f);
     public Color boxColor = new Color(0f, 1f, 0f, 0.25f);
-    public LayerMask detectionLayer;
+    private LayerMask detectionLayer; //Put this as extra, don't worry too much about this for now.
 
     [Header("Dash Settings")]
     public float dashDistance = 3f;
@@ -25,6 +26,8 @@ public class BossBehaviour : MonoBehaviour
     private Vector3 dashStart;
     private Vector3 dashTarget;
     private float cooldownTimer = 0f;
+
+    public GameObject playerMouse;
 
     //[Header("Optional Components")]
     //public Animator animator;
@@ -52,10 +55,25 @@ public class BossBehaviour : MonoBehaviour
     {
         Vector2 center = transform.position;
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, boxSize, 0f, detectionLayer);
+        
 
-        if (hits.Length > 0)
+        Vector3 targetPosition = playerMouse.transform.position;
+        // Ensure z-axis is ignored for 2D (set it to the same as the current object's z to avoid any depth issues)
+        targetPosition.z = transform.position.z;
+
+        foreach (Collider2D hit in hits)
         {
-            StartDash();
+            
+            if (hit.gameObject.layer == LayerMask.NameToLayer("Player")) // Adjust layer name to match your project
+            {
+                Debug.Log("Enemy detected in zone!");
+                FaceTarget(targetPosition);
+            }
+            else if (hit.gameObject.layer == LayerMask.NameToLayer("Grabable"))
+            {
+                Debug.Log("Obstacle detected in zone!");
+                StartDash();
+            }
         }
     }
 
@@ -102,10 +120,21 @@ public class BossBehaviour : MonoBehaviour
     {
         Vector3 direction = targetPosition - transform.position;
 
-        if (direction.x > 0)
-            transform.localScale = new Vector3(1f, 1f, 1f);
+        // Smoothly transition between the scales if needed
+        float targetScaleX = direction.x > 0 ? 1f : -1f;
+
+        // Optionally use Mathf.Lerp to make the transition smoother
+        if (transform.localScale.x != targetScaleX)
+        {
+            float smoothSpeed = 5f; // Adjust the speed of flipping
+            float newScaleX = Mathf.Lerp(transform.localScale.x, targetScaleX, Time.deltaTime * smoothSpeed);
+            transform.localScale = new Vector3(newScaleX, transform.localScale.y, transform.localScale.z);
+        }
         else
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+        {
+            // No smoothing if instant flip is preferred
+            transform.localScale = new Vector3(targetScaleX, transform.localScale.y, transform.localScale.z);
+        }
     }
 
     void OnDrawGizmos()
