@@ -16,7 +16,7 @@ public class BossBehaviour : MonoBehaviour
     [Header("Zone Settings")]
     public Vector2 boxSize = new Vector2(5f, 5f);
     public Color boxColor = new Color(0f, 1f, 0f, 0.25f);
-    private LayerMask detectionLayer; //Put this as extra, don't worry too much about this for now.
+    public LayerMask detectionLayer; //Step1: Add more layer in if you want it to detect more different objects. Step1
 
     [Header("Dash Settings")]
     public float dashDistance = 3f;
@@ -63,7 +63,7 @@ public class BossBehaviour : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            
+            //Step2: Add another if condition + Layer name to tell it to do something.
             if (hit.gameObject.layer == LayerMask.NameToLayer("Player")) // Adjust layer name to match your project
             {
                 Debug.Log("Enemy detected in zone!");
