@@ -25,12 +25,12 @@ public class NPCScript : MonoBehaviour
 
     public string m_TalkingDialog;
 
-    public AiMovement aiMovementScript;
+    public NpcController aiMovementScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        aiMovementScript = GetComponent<AiMovement>();
+        aiMovementScript = GetComponent<NpcController>();
     }
 
     // Update is called once per frame
