@@ -514,6 +514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1426,6 +1427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -7076,14 +7078,26 @@ MonoBehaviour:
   curHealth: 0
   panicMultiplier: 1
   currentNode: {fileID: 2005840865}
-  path: []
+  path:
+  - {fileID: 2005840865}
+  - {fileID: 1644287366}
+  - {fileID: 1133236008}
+  - {fileID: 1278684692}
+  - {fileID: 144649965}
+  - {fileID: 40135147}
+  - {fileID: 1328022394}
+  - {fileID: 1732539666}
+  - {fileID: 1019660013}
+  - {fileID: 1200706053}
   faction: 1
   currentState: 0
   player: {fileID: 32978715172035550}
   speed: 3
   stopDistance: 0
+  minPauseTime: 0
+  maxPauseTime: 0.75
+  pauseTimer: 0
   boxSize: {x: 5, y: 5}
-  pauseAtNode: 0.5
 --- !u!1 &191247621
 GameObject:
   m_ObjectHideFlags: 0
@@ -9404,6 +9418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -10008,6 +10023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -19095,6 +19111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -24941,7 +24958,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 887535461}
-  - component: {fileID: 887535460}
   m_Layer: 0
   m_Name: ENEMY SPIDER MOVE
   m_TagString: Untagged
@@ -24949,18 +24965,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &887535460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 887535459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d47933708dd384a95477568ff1915f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &887535461
 Transform:
   m_ObjectHideFlags: 0
@@ -24970,7 +24974,7 @@ Transform:
   m_GameObject: {fileID: 887535459}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.2800064, y: 2.6200027, z: -9.953138}
+  m_LocalPosition: {x: 7.03, y: 3.78, z: -9.953138}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25548,50 +25552,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &988634644
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 988634646}
-  - component: {fileID: 988634645}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &988634645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988634644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d47933708dd384a95477568ff1915f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &988634646
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988634644}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.30994, y: 2.3339322, z: -1.5673949}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1019660012 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5399332757730142690, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
@@ -26445,6 +26405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -34308,6 +34269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -35649,6 +35611,50 @@ Transform:
   - {fileID: 651458794}
   m_Father: {fileID: 1494674845}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1735780278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1735780280}
+  - component: {fileID: 1735780281}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1735780280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735780278}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19.30994, y: 2.3339322, z: -1.5673949}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1735780281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735780278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc4d152271d99a46b9b5fee1e7cdab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1741468559
 GameObject:
   m_ObjectHideFlags: 0
@@ -37494,6 +37500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -37555,6 +37562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -45994,14 +46002,23 @@ MonoBehaviour:
   curHealth: 0
   panicMultiplier: 1
   currentNode: {fileID: 1832516727}
-  path: []
+  path:
+  - {fileID: 1832516727}
+  - {fileID: 1916275427}
+  - {fileID: 1109642572}
+  - {fileID: 1716311884}
+  - {fileID: 956555194}
+  - {fileID: 1915332421}
+  - {fileID: 1777935667}
   faction: 0
   currentState: 0
   player: {fileID: 32978715172035550}
   speed: 3
   stopDistance: 1.5
+  minPauseTime: 0
+  maxPauseTime: 1.75
+  pauseTimer: 0
   boxSize: {x: 0, y: 0}
-  pauseAtNode: 0.5
 --- !u!1001 &2130118050
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46056,6 +46073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 9013370198038239144, guid: a20c49c9a553a1447990d529dd9d6c81, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -46855,4 +46873,4 @@ SceneRoots:
   - {fileID: 1270672716}
   - {fileID: 1665142430}
   - {fileID: 887535461}
-  - {fileID: 988634646}
+  - {fileID: 1735780280}

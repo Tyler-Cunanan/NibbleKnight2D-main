@@ -14,45 +14,38 @@ public class NpcController : MonoBehaviour
     [Header("Pathfinding")]
     public Node currentNode;
     public List<Node> path = new List<Node>();
-    // Keep a memory of last 3 patrol nodes
     private Queue<Node> lastPatrolNodes = new Queue<Node>();
     private int memorySize = 3;
 
-    public enum FactionType
-    {
-        Friendly,
-        Enemy
-    }
-    public FactionType faction = FactionType.Enemy; // default Enemy
+    public enum FactionType { Friendly, Enemy }
+    public FactionType faction = FactionType.Enemy;
 
-    public enum StateMachine
-    {
-        Patrol,
-        Engage,
-        Evade
-    }
+    public enum StateMachine { Patrol, Engage, Evade }
     public StateMachine currentState;
 
     [Header("Movement")]
     public GameObject player;
     public float speed = 3f;
-    public float stopDistance = 1.5f; // distance to stop from player when engaging
+    public float stopDistance = 1.5f;
+    public float minPauseTime = 0.5f;
+    public float maxPauseTime = 0.5f;
+    public float pauseTimer = 0f;
 
     [Header("Detection Box")]
-    public Vector2 boxSize = new Vector2(5f, 5f); // width and height of detection box
+    public Vector2 boxSize = new Vector2(5f, 5f);
 
-    [Header("Patrol")]
-    public float pauseAtNode = 0.5f;
-    private float pauseTimer = 0f;
 
     private void Start()
     {
         curHealth = maxHealth;
 
-        // Assign starting node
         if (currentNode == null)
-        {
             currentNode = AStarManager.instance.FindNearestNode(transform.position);
+
+        // Friendly NPCs get a random path right away
+        if (faction == FactionType.Friendly)
+        {
+            path = GenerateRandomPath();
         }
     }
 
@@ -73,25 +66,21 @@ public class NpcController : MonoBehaviour
                 break;
         }
 
-        MoveAlongPath();
+        // Friendly NPCs just move along their path
+        if (faction == FactionType.Friendly)
+        {
+            MoveAlongPath();
+        }
     }
 
     void HandleStateTransitions()
     {
         bool playerInBox = IsPlayerInDetectionBox();
 
-        // Friendly NPCs only patrol
         if (faction == FactionType.Friendly)
-        {
-            if (currentState != StateMachine.Patrol)
-            {
-                currentState = StateMachine.Patrol;
-                path.Clear();
-            }
-            return;
-        }
+            return; // Friendly NPC never changes state
 
-        // Enemy NPCs
+        // Enemy NPC logic
         if (curHealth <= maxHealth * 0.2f && currentState != StateMachine.Evade)
         {
             panicMultiplier = 2;
@@ -123,62 +112,31 @@ public class NpcController : MonoBehaviour
 
     void Patrol()
     {
+        float randomPauseDuration = Random.Range(minPauseTime, maxPauseTime);
+        if (pauseTimer > 0f)
+        {
+            pauseTimer -= Time.deltaTime;
+            return;
+        }
+
         if (path == null || path.Count == 0)
         {
-            Node[] allNodes = AStarManager.instance.AllNodes();
-            if (currentNode == null && allNodes.Length > 0)
-                currentNode = allNodes[0];
-
-            List<Node> possibleNodes = new List<Node>();
-
-            // Build a list of nodes that are not in memory and not current node
-            foreach (Node node in allNodes)
-            {
-                if (node != currentNode && !lastPatrolNodes.Contains(node))
-                {
-                    possibleNodes.Add(node);
-                }
-            }
-
-            // If all nodes are in memory, allow them but exclude current node
-            if (possibleNodes.Count == 0)
-            {
-                foreach (Node node in allNodes)
-                {
-                    if (node != currentNode)
-                        possibleNodes.Add(node);
-                }
-            }
-
-            // Pick a node randomly from possible nodes
-            Node nextNode = possibleNodes[Random.Range(0, possibleNodes.Count)];
-
-            // Update memory
-            lastPatrolNodes.Enqueue(currentNode);
-            if (lastPatrolNodes.Count > memorySize)
-                lastPatrolNodes.Dequeue();
-
-            // Generate path
-            path = AStarManager.instance.GeneratePath(currentNode, nextNode) ?? new List<Node>();
+            path = GenerateRandomPath();
         }
+
+        MoveAlongPath();
     }
 
     void Engage()
     {
-        Vector2 playerPos = player.transform.position;
-        float distanceToPlayer = Vector2.Distance(transform.position, playerPos);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        // Move toward player if farther than stopDistance
         if (distanceToPlayer > stopDistance)
         {
-            Vector3 targetPos = new Vector3(playerPos.x, playerPos.y, transform.position.z);
+            Vector3 targetPos = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * panicMultiplier * Time.deltaTime);
         }
-        else
-        {
-            // Close enough – stop
-            // Optional: attack or do idle animation here
-        }
+        // else: close enough — can attack or idle
     }
 
     void Evade()
@@ -188,41 +146,68 @@ public class NpcController : MonoBehaviour
             Node furthestNode = AStarManager.instance.FindFurthestNode(player.transform.position);
             path = AStarManager.instance.GeneratePath(currentNode, furthestNode) ?? new List<Node>();
         }
+
+        MoveAlongPath();
     }
 
     void MoveAlongPath()
     {
+        if (pauseTimer > 0f)
+        {
+            pauseTimer -= Time.deltaTime;
+            return;
+        }
+
         if (path == null || path.Count == 0)
             return;
 
         Node nextNode = path[0];
-        Vector3 targetPos = new Vector3(nextNode.transform.position.x, nextNode.transform.position.y, transform.position.z);
+        Vector2 targetPos = new Vector2(nextNode.transform.position.x, nextNode.transform.position.y);
 
-        // Smooth movement
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * panicMultiplier * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * panicMultiplier * Time.deltaTime);
 
-        // Check if reached node (smooth stopping)
         if (Vector2.Distance(transform.position, nextNode.transform.position) < 0.05f)
         {
             currentNode = nextNode;
             path.RemoveAt(0);
-
-            // Optional pause at nodes
-            pauseTimer = pauseAtNode;
+            float randomPauseDuration = Random.Range(minPauseTime, maxPauseTime);
+            pauseTimer = randomPauseDuration;
         }
+    }
 
-        // Handle pause
-        if (pauseTimer > 0)
+    List<Node> GenerateRandomPath()
+    {
+        Node[] allNodes = AStarManager.instance.AllNodes();
+        if (currentNode == null && allNodes.Length > 0)
+            currentNode = allNodes[0];
+
+        List<Node> possibleNodes = new List<Node>();
+        foreach (Node node in allNodes)
         {
-            pauseTimer -= Time.deltaTime;
-            return; // skip movement while pausing
+            if (node != currentNode && !lastPatrolNodes.Contains(node))
+                possibleNodes.Add(node);
         }
+
+        if (possibleNodes.Count == 0)
+        {
+            foreach (Node node in allNodes)
+            {
+                if (node != currentNode)
+                    possibleNodes.Add(node);
+            }
+        }
+
+        Node nextNode = possibleNodes[Random.Range(0, possibleNodes.Count)];
+        lastPatrolNodes.Enqueue(currentNode);
+        if (lastPatrolNodes.Count > memorySize)
+            lastPatrolNodes.Dequeue();
+
+        return AStarManager.instance.GeneratePath(currentNode, nextNode) ?? new List<Node>();
     }
 
     private void OnDrawGizmosSelected()
     {
-        // Draw detection box
-        Gizmos.color = new Color(1f, 0f, 0f, 0.3f); // semi-transparent red
+        Gizmos.color = new Color(1f, 0f, 0f, 0.3f);
         Gizmos.DrawCube(transform.position, new Vector3(boxSize.x, boxSize.y, 0.1f));
     }
 }
