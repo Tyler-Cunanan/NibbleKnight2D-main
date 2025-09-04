@@ -14,6 +14,7 @@ TagManager:
   - PortalStandingPipe
   - PortalWallDoorPipe
   - action
+  - Hook Projectile
   layers:
   - Default
   - TransparentFX

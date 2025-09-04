@@ -34,9 +34,15 @@ public class NpcController : MonoBehaviour
     [Header("Detection Box")]
     public Vector2 boxSize = new Vector2(5f, 5f);
 
+    [Header("Other reference")]
+    private EnemyNPCScript enemyNPCScript;
+    private SwissHealthScript swissHealthScript;
 
     private void Start()
     {
+        enemyNPCScript = gameObject.GetComponent<EnemyNPCScript>();
+        swissHealthScript = gameObject.GetComponent<SwissHealthScript>();
+
         curHealth = maxHealth;
 
         if (currentNode == null)

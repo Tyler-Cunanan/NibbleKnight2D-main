@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 4458830698164896312}
   - component: {fileID: 1387467635712365406}
   m_Layer: 0
-  m_Name: 9-Sliced
-  m_TagString: Untagged
+  m_Name: Hook Projectile
+  m_TagString: Hook Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
