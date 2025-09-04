@@ -51,6 +51,7 @@ public class NpcController : MonoBehaviour
 
     private void Update()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         HandleStateTransitions();
 
         switch (currentState)
