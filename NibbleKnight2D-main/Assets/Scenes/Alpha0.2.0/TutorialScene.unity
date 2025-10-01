@@ -1169,6 +1169,7 @@ MonoBehaviour:
   m_FinishedDialog: 
   m_TalkingDialog: '*Whispers* Hey. Be careful around that enemy. I think it''s sleeping
     since it''s not moving but they''ll still hurt you!'
+  aiMovementScript: {fileID: 0}
 --- !u!61 &96113724
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3568,7 +3569,7 @@ MonoBehaviour:
   m_PauseMenuUI: {fileID: 549558584}
   m_Options: {fileID: 379684184}
   m_PauseMenuButtons: {fileID: 1313352836}
-  m_BackgroundMusicAudioSource: {fileID: 792900097}
+  m_BackgroundMusicAudioSource: {fileID: 0}
 --- !u!1 &349689629
 GameObject:
   m_ObjectHideFlags: 0
@@ -7522,11 +7523,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!82 &792900097 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5922681121744919745, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-  m_PrefabInstance: {fileID: 7852131523567911683}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &803058978 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6302573021620255193, guid: f863843b5e0ee4e49a2fa092646400cd, type: 3}
@@ -8459,6 +8455,7 @@ MonoBehaviour:
   m_FinishedDialog: 
   m_TalkingDialog: OUCH! Can you get off my head? Use A to move left and D to move
     right...
+  aiMovementScript: {fileID: 0}
 --- !u!1 &894658893
 GameObject:
   m_ObjectHideFlags: 0
@@ -9275,7 +9272,7 @@ MonoBehaviour:
   Options: {fileID: 379684184}
   MainMenuButtonScript: {fileID: 1313352836}
   m_MusicSlider: {fileID: 679710298}
-  m_BackgroundMusicAudioSource: {fileID: 792900097}
+  m_BackgroundMusicAudioSource: {fileID: 0}
 --- !u!1 &981213028
 GameObject:
   m_ObjectHideFlags: 0
@@ -9623,6 +9620,7 @@ MonoBehaviour:
   m_FinishedDialog: 
   m_TalkingDialog: 'Wow! This sewer water looks dangerous but totally jumpable!!
     Press down the Space Bar to Jump! '
+  aiMovementScript: {fileID: 0}
 --- !u!61 &1083580331
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10385,6 +10383,7 @@ MonoBehaviour:
   m_NotEnoughDialog: 
   m_FinishedDialog: 
   m_TalkingDialog: I feel like one of the adults is lying that there's nothing there...
+  aiMovementScript: {fileID: 0}
 --- !u!61 &1122840008
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13705,6 +13704,7 @@ MonoBehaviour:
   m_FinishedDialog: 
   m_TalkingDialog: Nice Grappling skills. But you see those coins behind me? Pick
     them up! They might help you later on!
+  aiMovementScript: {fileID: 0}
 --- !u!61 &1370706041
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14993,6 +14993,7 @@ MonoBehaviour:
   m_NotEnoughDialog: 
   m_FinishedDialog: 
   m_TalkingDialog: Still nothing here.
+  aiMovementScript: {fileID: 0}
 --- !u!61 &1482469410
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16290,12 +16291,12 @@ MonoBehaviour:
   m_margin: {x: -0.23987198, y: 0.1776061, z: 15.841406, w: 3.6060164}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_renderer: {fileID: 1585087695}
-  m_maskType: 0
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+  m_hasFontAssetChanged: 0
+  m_renderer: {fileID: 1585087695}
+  m_maskType: 0
 --- !u!23 &1585087695
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18691,6 +18692,7 @@ MonoBehaviour:
   m_NotEnoughDialog: If you want this gate unlocked, 5 coins.
   m_FinishedDialog: Thanks again! Sorry but these coins will help feed my family.
   m_TalkingDialog: 
+  aiMovementScript: {fileID: 0}
 --- !u!61 &1726282963
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20777,6 +20779,7 @@ MonoBehaviour:
     hook and swing across! Use the LMB on that green water valve! You can use w to
     retract, s to detract, a and d to swing and space bar or lmb to let go. Be careful
     Mister and don't fall in!
+  aiMovementScript: {fileID: 0}
 --- !u!61 &1965539705
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21175,6 +21178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308777d4772a68312a84c071666d4311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damagePlayer: 10
+  npcControllerScript: {fileID: 0}
+  audioSource: {fileID: 0}
+  hitSound: {fileID: 0}
+  EnemySpiderMove: {fileID: 0}
 --- !u!61 &1973204365
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22237,7 +22245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ac92f49c4c1ed7aa292bd68ffed85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BackgroundMusic: {fileID: 792900097}
+  m_BackgroundMusic: {fileID: 0}
 --- !u!1 &2101367431
 GameObject:
   m_ObjectHideFlags: 0
@@ -23517,83 +23525,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be98961ca6a4d2c4d8d6fad7653cbdea, type: 3}
---- !u!1001 &7852131523567911683
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 32978715099678022, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_Name
-      value: SwissInfo (Player, Layer 10)
-      objectReference: {fileID: 0}
-    - target: {fileID: 390714425003895458, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_Options
-      value: 
-      objectReference: {fileID: 379684184}
-    - target: {fileID: 390714425003895458, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_PauseMenuUI
-      value: 
-      objectReference: {fileID: 549558584}
-    - target: {fileID: 922101914158987091, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_HealthSlider
-      value: 
-      objectReference: {fileID: 707280396}
-    - target: {fileID: 2995081589748328755, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: jumpPower
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3712467426687851436, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_NumOfCoinsText
-      value: 
-      objectReference: {fileID: 331269322}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6448578349335810656, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 755391193cec25a4ba461a7f51901fea, type: 3}
 --- !u!1001 &8924986907785664235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23655,7 +23586,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 7852131523567911683}
   - {fileID: 1518555480}
   - {fileID: 981213029}
   - {fileID: 479996479}
