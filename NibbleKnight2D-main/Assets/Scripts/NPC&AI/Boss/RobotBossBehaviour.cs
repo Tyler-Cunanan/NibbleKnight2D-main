@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-public class BossBehaviour : MonoBehaviour
+public class RobotBossBehaviour : MonoBehaviour
 {
     public enum BossState
     {
@@ -11,7 +12,10 @@ public class BossBehaviour : MonoBehaviour
         Cooldown
     }
 
-    private BossState currentState = BossState.Idle;
+    public BossState currentState = BossState.Idle;
+
+    [Header("Stats")]
+    public int health = 0;
 
     [Header("Zone Settings")]
     public Vector2 boxSize = new Vector2(5f, 5f);
@@ -29,9 +33,20 @@ public class BossBehaviour : MonoBehaviour
 
     public GameObject playerMouse;
 
-    //[Header("Optional Components")]
-    //public Animator animator;
+    public float moveSpeed = 2f;
+    private Rigidbody2D rb;
+
+
+    [Header("Other Components")]
+    public Animator animator;
+    public bool hasShield = false;
+
     //public AudioSource dashSound;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
@@ -56,25 +71,43 @@ public class BossBehaviour : MonoBehaviour
         Vector2 center = transform.position;
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, boxSize, 0f, detectionLayer);
         
-
-        Vector3 targetPosition = playerMouse.transform.position;
-        // Ensure z-axis is ignored for 2D (set it to the same as the current object's z to avoid any depth issues)
-        targetPosition.z = transform.position.z;
-
         foreach (Collider2D hit in hits)
         {
-            //Step2: Add another if condition + Layer name to tell it to do something.
-            if (hit.gameObject.layer == LayerMask.NameToLayer("Player")) // Adjust layer name to match your project
-            {
-                Debug.Log("Enemy detected in zone!");
-                FaceTarget(targetPosition);
-            }
-            else if (hit.gameObject.layer == LayerMask.NameToLayer("Grabable"))
+            if (hit.gameObject.layer == LayerMask.NameToLayer("Grabable"))
             {
                 Debug.Log("Obstacle detected in zone!");
                 StartDash();
             }
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Debug.Log("Player entered zone!");
+            AttackPlayer();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            animator.SetBool("Attack", false);
+        }
+    }
+
+    void AttackPlayer()
+    {
+        animator.SetBool("Attack", true);
+        Debug.Log("Boss is attacking.");
+    }
+
+    void CreateShield()
+    {
+        animator.SetTrigger("CreateShield");
+        Debug.Log("Boss is creating shield.");
+        hasShield = true;
     }
 
     void StartDash()
@@ -116,25 +149,11 @@ public class BossBehaviour : MonoBehaviour
         }
     }
 
-    void FaceTarget(Vector3 targetPosition)
+    public void MoveToTarget(Vector3 targetPosition)
     {
         Vector3 direction = targetPosition - transform.position;
-
-        // Smoothly transition between the scales if needed
-        float targetScaleX = direction.x > 0 ? 1f : -1f;
-
-        // Optionally use Mathf.Lerp to make the transition smoother
-        if (transform.localScale.x != targetScaleX)
-        {
-            float smoothSpeed = 5f; // Adjust the speed of flipping
-            float newScaleX = Mathf.Lerp(transform.localScale.x, targetScaleX, Time.deltaTime * smoothSpeed);
-            transform.localScale = new Vector3(newScaleX, transform.localScale.y, transform.localScale.z);
-        }
-        else
-        {
-            // No smoothing if instant flip is preferred
-            transform.localScale = new Vector3(targetScaleX, transform.localScale.y, transform.localScale.z);
-        }
+        Vector2 moveDir = direction.normalized;
+        rb.velocity = moveDir * moveSpeed;
     }
 
     void OnDrawGizmos()
