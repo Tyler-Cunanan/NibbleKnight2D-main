@@ -16,6 +16,7 @@ public class RobotBossBehaviour : MonoBehaviour
 
     [Header("Stats")]
     public int health = 0;
+    public bool hasShield = false;
 
     [Header("Zone Settings")]
     public Vector2 boxSize = new Vector2(5f, 5f);
@@ -39,8 +40,8 @@ public class RobotBossBehaviour : MonoBehaviour
 
     [Header("Other Components")]
     public Animator animator;
-    public bool hasShield = false;
 
+    public SwissHealthScript swissHealthScript;
     //public AudioSource dashSound;
 
     private void Awake()
@@ -94,6 +95,7 @@ public class RobotBossBehaviour : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             animator.SetBool("Attack", false);
+
         }
     }
 
@@ -101,6 +103,7 @@ public class RobotBossBehaviour : MonoBehaviour
     {
         animator.SetBool("Attack", true);
         Debug.Log("Boss is attacking.");
+        swissHealthScript.SwissDamaged(10, transform);
     }
 
     void CreateShield()
