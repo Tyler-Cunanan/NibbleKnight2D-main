@@ -1,5 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
 
 public class RobotBossBehaviour : MonoBehaviour
@@ -16,7 +17,9 @@ public class RobotBossBehaviour : MonoBehaviour
 
     [Header("Stats")]
     public int health = 0;
-    public bool hasShield = false;
+    public int shieldAmount = 0;
+    public bool hasShield;
+
 
     [Header("Zone Settings")]
     public Vector2 boxSize = new Vector2(5f, 5f);
@@ -42,6 +45,8 @@ public class RobotBossBehaviour : MonoBehaviour
     public Animator animator;
 
     public SwissHealthScript swissHealthScript;
+
+    public GameObject bossZone;
     //public AudioSource dashSound;
 
     private void Awake()
@@ -60,10 +65,16 @@ public class RobotBossBehaviour : MonoBehaviour
             case BossState.Dashing:
                 DashBackward();
                 break;
+        }
 
-            case BossState.Cooldown:
-                HandleCooldown();
-                break;
+        if (health <= 1)
+        {
+            Destroy(bossZone);
+            Debug.Log("DIE?");
+        }
+        else if (health <= 50)
+        {
+            CreateshieldAmount();
         }
     }
 
@@ -88,6 +99,35 @@ public class RobotBossBehaviour : MonoBehaviour
             Debug.Log("Player entered zone!");
             AttackPlayer();
         }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Grabable"))
+        {
+            Debug.Log("BOSS GOT HIT!");
+            int remainingDamage = 25;
+            Destroy(collision.gameObject);
+            // If shieldAmount exists, absorb damage first
+            if (shieldAmount > 0)
+            {
+                int shieldAmountAbsorb = Mathf.Min(shieldAmount, remainingDamage);
+                shieldAmount -= shieldAmountAbsorb;
+                remainingDamage -= shieldAmountAbsorb;
+            }
+
+            // Apply leftover damage to health
+            if (remainingDamage > 0)
+            {
+                health -= remainingDamage;
+                health = Mathf.Max(health, 0);
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Debug.Log("Player entered zone!");
+            AttackPlayer();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -106,11 +146,17 @@ public class RobotBossBehaviour : MonoBehaviour
         swissHealthScript.SwissDamaged(10, transform);
     }
 
-    void CreateShield()
+    void CreateshieldAmount()
     {
-        animator.SetTrigger("CreateShield");
-        Debug.Log("Boss is creating shield.");
-        hasShield = true;
+        if (!hasShield)
+        {
+            animator.SetBool("CreateShield", true);
+            Debug.Log("Boss is creating shieldAmount.");
+
+            shieldAmount = 100;
+
+            StartCoroutine(WaitForshieldAmountAnimation());
+        }
     }
 
     void StartDash()
@@ -142,16 +188,6 @@ public class RobotBossBehaviour : MonoBehaviour
         }
     }
 
-    void HandleCooldown()
-    {
-        cooldownTimer -= Time.deltaTime;
-
-        if (cooldownTimer <= 0f)
-        {
-            currentState = BossState.Idle;
-        }
-    }
-
     public void MoveToTarget(Vector3 targetPosition)
     {
         Vector3 direction = targetPosition - transform.position;
@@ -170,11 +206,13 @@ public class RobotBossBehaviour : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, boxSize);
     }
 
-    void OnDrawGizmosSelected()
+    IEnumerator WaitForshieldAmountAnimation()
     {
-        Vector3 dashDirection = -transform.right;
-        Vector3 previewTarget = transform.position + dashDirection * dashDistance;
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, previewTarget);
+        // Wait until the animation has enough time to play
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("CreateShield", false);  // turn off bool if needed
+        hasShield= true;
+        Debug.Log("shieldAmount animation finished → Boss is now Idle.");
     }
 }

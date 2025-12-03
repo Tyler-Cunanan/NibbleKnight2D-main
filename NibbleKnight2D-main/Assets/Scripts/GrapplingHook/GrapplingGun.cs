@@ -12,11 +12,6 @@ public class GrapplingGun : MonoBehaviour
     void Update()
     {
         AimGunAtMouse();
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            grappleHook.TryStartGrapple();
-        }
     }
 
     void AimGunAtMouse()
