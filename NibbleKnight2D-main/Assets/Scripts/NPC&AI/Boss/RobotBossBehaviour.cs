@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
+using TMPro;
 
 public class RobotBossBehaviour : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class RobotBossBehaviour : MonoBehaviour
     public int health = 0;
     public int shieldAmount = 0;
     public bool hasShield;
-
 
     [Header("Zone Settings")]
     public Vector2 boxSize = new Vector2(5f, 5f);
@@ -47,6 +47,10 @@ public class RobotBossBehaviour : MonoBehaviour
     public SwissHealthScript swissHealthScript;
 
     public GameObject bossZone;
+
+    //Temporary UI for Boss Health
+    public TextMeshProUGUI healthDisplayText;
+    public TextMeshProUGUI shieldDisplayText;
     //public AudioSource dashSound;
 
     private void Awake()
@@ -76,6 +80,9 @@ public class RobotBossBehaviour : MonoBehaviour
         {
             CreateshieldAmount();
         }
+
+        healthDisplayText.text = health.ToString();
+        shieldDisplayText.text = shieldAmount.ToString();
     }
 
     void CheckZone()
@@ -97,7 +104,11 @@ public class RobotBossBehaviour : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("Player entered zone!");
-            AttackPlayer();
+            if (swissHealthScript.invulnerable == false)
+            {
+                AttackPlayer();
+                Debug.Log("Player ATTACK!");
+            }
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Grabable"))
         {
@@ -126,7 +137,11 @@ public class RobotBossBehaviour : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("Player entered zone!");
-            AttackPlayer();
+            if (swissHealthScript.invulnerable == false)
+            {
+                AttackPlayer();
+                Debug.Log("Player ATTACK!");
+            }
         }
     }
 

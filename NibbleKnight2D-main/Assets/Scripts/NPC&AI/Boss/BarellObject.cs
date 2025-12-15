@@ -18,6 +18,17 @@ public class BarellObject : MonoBehaviour
         {
             rb.simulated = true;
             rb.gravityScale = 1f;
+            StartCoroutine(ResetItSelf());
         }
+        else if (collision.gameObject.CompareTag("Ground"))
+        {
+            StartCoroutine(ResetItSelf());
+        }
+    }
+
+    private IEnumerator ResetItSelf()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 }
