@@ -7,6 +7,10 @@ public class CoinCollisionScript : MonoBehaviour
 {
     public CollectableStore collectableStoreScript;
 
+    public AudioSource audioSource;
+    public AudioClip audioClip;
+
+
     // // Start is called before the first frame update
     // void Start()
     // {
@@ -25,6 +29,8 @@ public class CoinCollisionScript : MonoBehaviour
         {
             Debug.Log("coin picked up");
             collectableStoreScript.AddCheese();
+
+            AudioSource.PlayClipAtPoint(audioClip, transform.position); //Help play the audio independently of the object, so destroying the coin won’t stop the audio.
             Destroy(gameObject);
         }
     }
@@ -35,6 +41,8 @@ public class CoinCollisionScript : MonoBehaviour
         {
             Debug.Log("coin picked up");
             collectableStoreScript.AddCheese();
+
+            AudioSource.PlayClipAtPoint(audioClip, transform.position); //Help play the audio independently of the object, so destroying the coin won’t stop the audio.
             Destroy(gameObject);
         }
     }

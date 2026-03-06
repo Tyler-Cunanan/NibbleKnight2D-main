@@ -34564,6 +34564,8 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
+  audioClips: []
+  audioSource: {fileID: 0}
 --- !u!114 &1650689020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47123,6 +47125,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 4519579244281767198}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 384
       objectReference: {fileID: 0}
@@ -47215,6 +47221,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+--- !u!82 &4519579244281767198 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1757750165087925183, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+  m_PrefabInstance: {fileID: 4519579244281767197}
+  m_PrefabAsset: {fileID: 0}
 --- !u!82 &5922681121683047001 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 7581870464687888063, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}

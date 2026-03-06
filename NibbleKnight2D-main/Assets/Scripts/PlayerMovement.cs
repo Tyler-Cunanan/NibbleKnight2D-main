@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpCooldown;
     private float horizontalInput;
 
+    [Header("Audio")]
+    public List<AudioClip> audioClips = new List<AudioClip>();
+    public AudioSource audioSource;
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -80,7 +83,10 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             if (isGrounded())
+            {
+                PlayRandomClip();
                 body.velocity = new Vector2(body.velocity.x, jumpPower);
+            }
             else
             {
                 if (coyoteCounter > 0)
@@ -97,6 +103,13 @@ public class PlayerMovement : MonoBehaviour
     //     wallJumpCooldown = 0;
     // }
 
+    void PlayRandomClip()
+    {
+        if (audioClips.Count == 0) return;
+
+        int randomIndex = UnityEngine.Random.Range(0, audioClips.Count);
+        audioSource.PlayOneShot(audioClips[randomIndex]);
+    }
 
     private bool isGrounded()
     {
