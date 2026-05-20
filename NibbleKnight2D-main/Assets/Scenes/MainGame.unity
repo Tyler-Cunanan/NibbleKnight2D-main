@@ -34540,6 +34540,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 320
   joint: {fileID: 1650689017}
+  audioHookClip: {fileID: 0}
+  audioSource: {fileID: 0}
   grapplingGunScript: {fileID: 1004966789}
 --- !u!114 &1650689019
 MonoBehaviour:
@@ -34564,7 +34566,9 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
-  audioClips: []
+  footstepDelay: 0.4
+  audioJumpClips: []
+  audioWalkClips: []
   audioSource: {fileID: 0}
 --- !u!114 &1650689020
 MonoBehaviour:
@@ -34586,6 +34590,8 @@ MonoBehaviour:
   knockbackForceY: 10
   flickerDuration: 1
   flickerInterval: 0.1
+  audioSource: {fileID: 0}
+  audioTakeDamageClips: []
 --- !u!114 &1650689021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47132,6 +47138,38 @@ PrefabInstance:
       propertyPath: groundLayer.m_Bits
       value: 384
       objectReference: {fileID: 0}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioJumpClips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioWalkClips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioJumpClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: aa95b9dc6e588fb4a89b19dd144fc3b2, type: 3}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioJumpClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 49155ab3719381a41b990984cf5bd084, type: 3}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioWalkClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: ca1e0727401229b48900341c172f3172, type: 3}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioWalkClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9e9ba5bac6bbd2042a87b535e9236f99, type: 3}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioWalkClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 33f0f02ec1364074d87568e8e6cc21dd, type: 3}
+    - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioWalkClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: cbef4f4a226dd7042b45fe9127337b07, type: 3}
     - target: {fileID: 1226832099098646075, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.2399998
@@ -47173,9 +47211,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3446030450510604924, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 4519579244281767198}
+    - target: {fileID: 3446030450510604924, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_HealthSlider
       value: 
       objectReference: {fileID: 191247623}
+    - target: {fileID: 3446030450510604924, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioTakeDamageClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3446030450510604924, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioTakeDamageClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: cb2a99933bb663e42b407153799f9476, type: 3}
+    - target: {fileID: 3446030450510604924, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioTakeDamageClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: de376dfd8a202a04580eafd84d90ea50, type: 3}
+    - target: {fileID: 3446030450510604924, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioTakeDamageClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: cc60b06c29a0908408574cc3a7229101, type: 3}
     - target: {fileID: 3725153613746717869, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -47196,6 +47254,14 @@ PrefabInstance:
       propertyPath: m_Options
       value: 
       objectReference: {fileID: 882519980}
+    - target: {fileID: 5328551579362692325, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 4519579244281767198}
+    - target: {fileID: 5328551579362692325, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: audioHookClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0c07312c04bf0534eaceabf5f2210740, type: 3}
     - target: {fileID: 5328551579362692325, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_PauseMenuUI
       value: 

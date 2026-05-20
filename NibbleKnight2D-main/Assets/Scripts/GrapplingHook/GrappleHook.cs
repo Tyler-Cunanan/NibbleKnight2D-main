@@ -32,6 +32,11 @@ public class GrappleHook : MonoBehaviour
     private bool hooked = false;
     private bool hookActive = false;
 
+
+    [Header("Audio")]
+    public AudioClip audioHookClip;
+    public AudioSource audioSource;
+
     public GrapplingGun grapplingGunScript;
 
     void Start()
@@ -60,6 +65,7 @@ public class GrappleHook : MonoBehaviour
 
             float input = Input.GetKey(KeyCode.W) ? -1 : Input.GetKey(KeyCode.S) ? 1 : 0;
             joint.distance = Mathf.Clamp(joint.distance + input * ropeSpeed * Time.deltaTime, 1f, RopeMaxLength);
+
         }
     }
 
@@ -115,6 +121,8 @@ public class GrappleHook : MonoBehaviour
 
     void StartGrapple()
     {
+        audioSource.PlayOneShot(audioHookClip);
+
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = currentAnchor;
         joint.distance = Vector2.Distance(currentAnchor, transform.position);

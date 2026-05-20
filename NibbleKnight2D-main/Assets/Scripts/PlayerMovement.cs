@@ -23,8 +23,15 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpCooldown;
     private float horizontalInput;
 
+    //FootStep
+    private float footstepTimer;
+    public float footstepDelay = 0.4f;
+
+
+
     [Header("Audio")]
-    public List<AudioClip> audioClips = new List<AudioClip>();
+    public List<AudioClip> audioJumpClips = new List<AudioClip>();
+    public List<AudioClip> audioWalkClips = new List<AudioClip>();
     public AudioSource audioSource;
     void Awake()
     {
@@ -35,7 +42,27 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
-        
+
+        bool isMoving = Mathf.Abs(horizontalInput) > 0.01f;
+
+        // Play footsteps only every few seconds
+        if (isMoving && isGrounded())
+        {
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, audioWalkClips.Count);
+
+                audioSource.PlayOneShot(audioWalkClips[randomIndex]);
+
+                footstepTimer = footstepDelay;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
 
         //Flip Player when moving left or right
         if (horizontalInput > 0.01f )
@@ -84,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGrounded())
             {
-                PlayRandomClip();
+                PlayRandomJumpClip();
                 body.velocity = new Vector2(body.velocity.x, jumpPower);
             }
             else
@@ -103,12 +130,12 @@ public class PlayerMovement : MonoBehaviour
     //     wallJumpCooldown = 0;
     // }
 
-    void PlayRandomClip()
+    void PlayRandomJumpClip()
     {
-        if (audioClips.Count == 0) return;
+        if (audioJumpClips.Count == 0) return;
 
-        int randomIndex = UnityEngine.Random.Range(0, audioClips.Count);
-        audioSource.PlayOneShot(audioClips[randomIndex]);
+        int randomIndex = UnityEngine.Random.Range(0, audioJumpClips.Count);
+        audioSource.PlayOneShot(audioJumpClips[randomIndex]);
     }
 
     private bool isGrounded()

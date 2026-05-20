@@ -25,6 +25,10 @@ public class SwissHealthScript : MonoBehaviour
     private bool isFlickering = false;
     private Coroutine flickerRoutine;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public List<AudioClip> audioTakeDamageClips = new List<AudioClip>();
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -46,6 +50,11 @@ public class SwissHealthScript : MonoBehaviour
         if (!invulnerable)
         {
             ApplyKnockback(enemyTransform);
+
+            if (audioTakeDamageClips.Count == 0) return;
+
+            int randomIndex = UnityEngine.Random.Range(0, audioTakeDamageClips.Count);
+            audioSource.PlayOneShot(audioTakeDamageClips[randomIndex]);
         }
         if (flickerRoutine == null)
         {

@@ -622,6 +622,8 @@ MonoBehaviour:
   knockbackForceY: 12
   flickerDuration: 1
   flickerInterval: 0.1
+  audioSource: {fileID: 0}
+  audioTakeDamageClips: []
 --- !u!114 &1104716666170418345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,9 +647,7 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
-  audioClips:
-  - {fileID: 8300000, guid: aa95b9dc6e588fb4a89b19dd144fc3b2, type: 3}
-  - {fileID: 8300000, guid: 49155ab3719381a41b990984cf5bd084, type: 3}
+  audioJumpClips: []
   audioSource: {fileID: 1757750165087925183}
 --- !u!114 &5328551579362692325
 MonoBehaviour:
@@ -694,7 +694,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: -0.5075, y: 2.26}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.9400831
+  m_Distance: 1.7600724
   m_MaxDistanceOnly: 0
 --- !u!1 &8715104617596006003
 GameObject:
@@ -707,7 +707,7 @@ GameObject:
   - component: {fileID: 2331790824122585800}
   - component: {fileID: 1757750165087925183}
   m_Layer: 3
-  m_Name: Audio Source
+  m_Name: Player Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
