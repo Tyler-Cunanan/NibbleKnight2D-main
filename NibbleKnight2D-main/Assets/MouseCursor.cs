@@ -11,15 +11,20 @@ public class MouseCursor : MonoBehaviour
 
     void Start()
     {
-        // Hide the system cursor
+        // Hide system cursor
         Cursor.visible = false;
 
-        // Create the custom cursor GameObject
+        // Create cursor object
         cursorObject = new GameObject("CustomCursor");
+
         SpriteRenderer sr = cursorObject.AddComponent<SpriteRenderer>();
         sr.sprite = customCursorSprite;
 
-        // Set cursor size by scaling the GameObject
+        // Make cursor always render in front
+        sr.sortingLayerName = "UI";   // Optional: use a top layer
+        sr.sortingOrder = 9999;       // Very high order
+
+        // Set size
         cursorObject.transform.localScale = new Vector3(cursorSize.x, cursorSize.y, 1f);
     }
 
@@ -28,5 +33,11 @@ public class MouseCursor : MonoBehaviour
         // Update custom cursor position to follow mouse
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cursorObject.transform.position = mousePosition;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("click");
+            Debug.Log(Input.mousePosition);
+        }
     }
 }
