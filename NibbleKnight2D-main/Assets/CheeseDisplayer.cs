@@ -18,7 +18,18 @@ public class CheeseDisplayer : MonoBehaviour
 
     void Update()
     {
-        localCheeseNum = collectableStoreScript.cheeseAmount;
+        collectableStoreScript.cheeseAmount = localCheeseNum;
         cheeseDisplayText.text = localCheeseNum.ToString();
+    }
+    public void AddCheese()
+    {
+        localCheeseNum++;
+    }
+
+    // Reset the number to its default value
+    public void ResetNumber()
+    {
+        localCheeseNum = 0; // Set to whatever your default reset value should be
+        Debug.Log("Number reset to: " + localCheeseNum);
     }
 }

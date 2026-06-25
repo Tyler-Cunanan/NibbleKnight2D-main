@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CoinCollisionScript : MonoBehaviour
 {
-    public CollectableStore collectableStoreScript;
+    public CheeseDisplayer cheeseDisplayerScript;
 
     public AudioSource audioSource;
     public AudioClip audioClip;
@@ -28,7 +28,7 @@ public class CoinCollisionScript : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("coin picked up");
-            collectableStoreScript.AddCheese();
+            cheeseDisplayerScript.AddCheese();
 
             AudioSource.PlayClipAtPoint(audioClip, transform.position); //Help play the audio independently of the object, so destroying the coin won’t stop the audio.
             Destroy(gameObject);
@@ -40,7 +40,7 @@ public class CoinCollisionScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("coin picked up");
-            collectableStoreScript.AddCheese();
+            cheeseDisplayerScript.AddCheese();
 
             AudioSource.PlayClipAtPoint(audioClip, transform.position); //Help play the audio independently of the object, so destroying the coin won’t stop the audio.
             Destroy(gameObject);

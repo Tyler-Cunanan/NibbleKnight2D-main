@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b28dfc142b70cb58a6d08e8200c507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectableStoreScript: {fileID: 0}
+  collectableStoreScript: {fileID: 11400000, guid: 611095dd68da7ca4a833fb2fe1764631, type: 2}
   audioSource: {fileID: 2742602524554491806}
   audioClip: {fileID: 8300000, guid: e062525505347a849902efa00e1adf66, type: 3}
 --- !u!82 &2742602524554491806
