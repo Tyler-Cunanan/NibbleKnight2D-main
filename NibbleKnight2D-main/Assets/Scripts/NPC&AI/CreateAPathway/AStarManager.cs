@@ -2,6 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// It answers questions such as:
+//     "What is the shortest path from Node A to Node B?"
+//     "Which Node is closest to this position?"
+//     "Which Node is furthest from this position?"
+//
+// The NPC controller is responsible for deciding:
+//     "I want to patrol."
+//     "I want to chase the player."
+//     "I want to flee."
+//
+// Then AStarManager can be asked to find the route needed to accomplish that decision:
+// NpcController --"I want to go to Node X"---> AStarManager ---"Here is the route"---> List<Node> --> NpcController.MoveAlongPath()
+
 public class AStarManager : MonoBehaviour
 {
     public static AStarManager instance;

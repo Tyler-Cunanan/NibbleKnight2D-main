@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+// CURRENT RESPONSIBILITIES:
+// - Stores how much damage the enemy is intended to deal.
+// - References NpcController.
+// - Handles the enemy being hit by the player's hook projectile.
+// - Plays a hit sound.
+// - Destroys the enemy when hit.
 public class EnemyNPCScript : MonoBehaviour
 {
     [Header("Health")]

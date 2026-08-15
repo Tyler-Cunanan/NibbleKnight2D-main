@@ -4,6 +4,29 @@ using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
 using TMPro;
 
+// Controls the Robot Boss's movement, combat, shield, and basic behaviour.
+//
+// OVERVIEW:
+// The boss currently has four states:
+//     Idle       -> Look for obstacles / decide whether to dash
+//     Moving     -> Defined, but currently not used by Update()
+//     Dashing    -> Move backward toward dashTarget
+//     Cooldown   -> Defined, but currently not processed by Update()
+//
+// The boss also:
+// - Detects objects inside a rectangular zone.
+// - Dashes backward when it detects a "Grabable" object.
+// - Attacks the player when they enter/stay inside its trigger.
+// - Takes damage from "Grabable" objects.
+// - Creates a shield when health reaches 50 or below.
+// - Updates temporary boss health/shield UI.
+//
+// Potential future AI decision points include:
+// - Which state to enter.
+// - When/how to attack.
+// - Whether to dash.
+// - Where to move.
+// - When to create/use the shield.
 public class RobotBossBehaviour : MonoBehaviour
 {
     public enum BossState
@@ -14,6 +37,9 @@ public class RobotBossBehaviour : MonoBehaviour
         Cooldown
     }
 
+    // IMPORTANT:
+    // Current behaviour state of the boss.    
+    // Idle and Dashing currently have behaviour in Update(). Moving and Cooldown exist in the enum but currently have no corresponding behaviour in Update().
     public BossState currentState = BossState.Idle;
 
     [Header("Stats")]
@@ -24,7 +50,13 @@ public class RobotBossBehaviour : MonoBehaviour
     [Header("Zone Settings")]
     public Vector2 boxSize = new Vector2(5f, 5f);
     public Color boxColor = new Color(0f, 1f, 0f, 0.25f);
-    public LayerMask detectionLayer; //Step1: Add more layer in if you want it to detect more different objects. Step1
+
+    // Determines which physics layers can be detected by
+    // Physics2D.OverlapBoxAll().
+    //
+    // IMPORTANT FOR AI TEAM MEMBER:
+    // This is a LayerMask, not a Tag. The detection query first filters using this mask, and CheckZone() then specifically checks for "Grabable".
+    public LayerMask detectionLayer; //Step1: Add more layer in if you want it to detect more different objects.
 
     [Header("Dash Settings")]
     public float dashDistance = 3f;
@@ -35,6 +67,7 @@ public class RobotBossBehaviour : MonoBehaviour
     private Vector3 dashTarget;
     private float cooldownTimer = 0f;
 
+    //Grab the player character... Sorry if the naming is ass.
     public GameObject playerMouse;
 
     public float moveSpeed = 2f;
@@ -58,6 +91,9 @@ public class RobotBossBehaviour : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    // ============================================================
+    // MAIN UPDATE LOOP
+    // ============================================================
     void Update()
     {
         switch (currentState)
@@ -85,13 +121,20 @@ public class RobotBossBehaviour : MonoBehaviour
         shieldDisplayText.text = shieldAmount.ToString();
     }
 
+    // ============================================================
+    // DETECTION / PERCEPTION
+    // ============================================================
     void CheckZone()
     {
         Vector2 center = transform.position;
+
+        // Find every Collider2D inside the rectangular detection zone.
+        // DetectionLayer controls which physics layers are considered. This is essentially the boss's current "perception system".
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, boxSize, 0f, detectionLayer);
         
         foreach (Collider2D hit in hits)
         {
+            // Currently, the only object type that causes a reaction is something on the "Grabable" layer. Which is the falling box.
             if (hit.gameObject.layer == LayerMask.NameToLayer("Grabable"))
             {
                 Debug.Log("Obstacle detected in zone!");
@@ -101,6 +144,9 @@ public class RobotBossBehaviour : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // --------------------------------------------------------
+        // PLAYER ENTERS BOSS TRIGGER
+        // --------------------------------------------------------
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("Player entered zone!");
@@ -110,6 +156,10 @@ public class RobotBossBehaviour : MonoBehaviour
                 Debug.Log("Player ATTACK!");
             }
         }
+
+        // --------------------------------------------------------
+        // GRABABLE OBJECT HITS BOSS
+        // --------------------------------------------------------
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Grabable"))
         {
             Debug.Log("BOSS GOT HIT!");
@@ -132,8 +182,12 @@ public class RobotBossBehaviour : MonoBehaviour
         }
     }
 
+    // ============================================================
+    // CONTINUOUS PLAYER COLLISION
+    // ============================================================
     private void OnTriggerStay2D(Collider2D collision)
     {
+        // While the player remains inside the trigger, repeatedly attempt to attack.
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("Player entered zone!");
@@ -210,6 +264,9 @@ public class RobotBossBehaviour : MonoBehaviour
         rb.velocity = moveDir * moveSpeed;
     }
 
+    // ============================================================
+    // DEBUG VISUALIZATION
+    // ============================================================
     void OnDrawGizmos()
     {
         Gizmos.color = boxColor;

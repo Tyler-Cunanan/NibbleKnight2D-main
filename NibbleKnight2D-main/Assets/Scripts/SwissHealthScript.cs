@@ -16,6 +16,11 @@ public class SwissHealthScript : MonoBehaviour
     public float knockbackForceX = 1000f; //Note: Due to the exist player chara physic/gravity that was modified by previous person, I just apply as many X force as possible
     public float knockbackForceY = 15f;
 
+    [Header("Other Scripts")]
+    public GameObject gameOverUI;
+    public CheeseDisplayer cheeseDisplayerScript;
+    public RestartGame restartGameScript;
+
     //When take damage, flicker
     [Header("Flicker Settings")]
     [SerializeField] float flickerDuration = 1.0f;   // Total flicker time
@@ -42,10 +47,11 @@ public class SwissHealthScript : MonoBehaviour
     {
         m_SwissCurrentHealth -= damageTaken;
         StartCoroutine(Flicker());
-        if (m_SwissCurrentHealth < 0)
+        if (m_SwissCurrentHealth <= 0)
         {
             m_SwissCurrentHealth = 0;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            cheeseDisplayerScript.ResetNumber();
+            gameOverUI.SetActive(true);
         }
         if (!invulnerable)
         {
