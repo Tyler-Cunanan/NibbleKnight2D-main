@@ -23689,7 +23689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 887535461}
   m_Layer: 0
-  m_Name: ENEMY SPIDER MOVE 1
+  m_Name: ENEMY SPIDER PATHWAY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26317,7 +26317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1220750509}
   m_Layer: 0
-  m_Name: ENEMY SPIDER MOVE 2
+  m_Name: ENEMY SPIDER1 PATHWAY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48012,9 +48012,9 @@ SceneRoots:
   - {fileID: 356243800}
   - {fileID: 894092892}
   - {fileID: 1494674845}
-  - {fileID: 1250591632}
-  - {fileID: 2136219029}
   - {fileID: 1665142430}
+  - {fileID: 2136219029}
+  - {fileID: 1250591632}
   - {fileID: 887535461}
   - {fileID: 1220750509}
   - {fileID: 1189825764}
