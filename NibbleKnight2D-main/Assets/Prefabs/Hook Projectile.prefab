@@ -76,13 +76,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
+  m_SortingOrder: 100
+  m_Sprite: {fileID: 21300000, guid: f14b1eb9429b34d44a4d4c6c5fb80261, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 16.06, y: 8.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -164,8 +164,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityScale: 1.5
   maxLifetime: 2
-  audioAttachClip: {fileID: 8300000, guid: 0c07312c04bf0534eaceabf5f2210740, type: 3}
-  audioSource: {fileID: 1547241149125120071}
 --- !u!82 &1547241149125120071
 AudioSource:
   m_ObjectHideFlags: 0
