@@ -79,11 +79,7 @@ public class GrappleHook : MonoBehaviour
         //Grab the Gun Pivot from GrapplingGun script position.
         float angle = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
 
-        GameObject projectile = Instantiate(
-            hookProjectilePrefab,
-            grapplingGunScript.gunPivot.transform.position,
-            Quaternion.Euler(0f, 0f, angle)
-        );
+        GameObject projectile = Instantiate(hookProjectilePrefab,grapplingGunScript.gunPivot.transform.position,Quaternion.Euler(0f, 0f, angle));
 
         HookProjectile hookScript = projectile.GetComponent<HookProjectile>();
         hookScript.Initialize(shootDir, hookProjectileSpeed, this, hookableLayer);

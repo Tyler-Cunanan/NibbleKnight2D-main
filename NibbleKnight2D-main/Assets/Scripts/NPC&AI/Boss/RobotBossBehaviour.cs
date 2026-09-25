@@ -73,6 +73,11 @@ public class RobotBossBehaviour : MonoBehaviour
     public float moveSpeed = 2f;
     private Rigidbody2D rb;
 
+    [Header("Damage Stun / Invulnerability")]
+    public float damageInvulnerabilityDuration = 10f;
+    private bool damageInvulnerable = false;
+    private int playerLayer;
+    private int bossLayer;
 
     [Header("Other Components")]
     public Animator animator;
@@ -89,6 +94,9 @@ public class RobotBossBehaviour : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        playerLayer = LayerMask.NameToLayer("Player");
+        bossLayer = gameObject.layer;
     }
 
     // ============================================================
@@ -100,6 +108,13 @@ public class RobotBossBehaviour : MonoBehaviour
         {
             case BossState.Idle:
                 CheckZone();
+                break;
+
+            case BossState.Moving:
+                if (playerMouse != null)
+                {
+                    MoveToTarget(playerMouse.transform.position);
+                }
                 break;
 
             case BossState.Dashing:
@@ -126,6 +141,7 @@ public class RobotBossBehaviour : MonoBehaviour
     // ============================================================
     void CheckZone()
     {
+        if (damageInvulnerable) return;
         Vector2 center = transform.position;
 
         // Find every Collider2D inside the rectangular detection zone.
@@ -138,10 +154,11 @@ public class RobotBossBehaviour : MonoBehaviour
             if (hit.gameObject.layer == LayerMask.NameToLayer("Grabable"))
             {
                 Debug.Log("Obstacle detected in zone!");
-                StartDash();
+                currentState = BossState.Dashing;
             }
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // --------------------------------------------------------
@@ -149,11 +166,9 @@ public class RobotBossBehaviour : MonoBehaviour
         // --------------------------------------------------------
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log("Player entered zone!");
-            if (swissHealthScript.invulnerable == false)
+            if (!damageInvulnerable && swissHealthScript.invulnerable == false)
             {
                 AttackPlayer();
-                Debug.Log("Player ATTACK!");
             }
         }
 
@@ -163,9 +178,13 @@ public class RobotBossBehaviour : MonoBehaviour
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Grabable"))
         {
             Debug.Log("BOSS GOT HIT!");
+
             int remainingDamage = 25;
             Destroy(collision.gameObject);
-            // If shieldAmount exists, absorb damage first
+
+            // Boss becomes temporarily invulnerable / pass-through
+            StartCoroutine(DamageInvulnerability());
+
             if (shieldAmount > 0)
             {
                 int shieldAmountAbsorb = Mathf.Min(shieldAmount, remainingDamage);
@@ -173,7 +192,6 @@ public class RobotBossBehaviour : MonoBehaviour
                 remainingDamage -= shieldAmountAbsorb;
             }
 
-            // Apply leftover damage to health
             if (remainingDamage > 0)
             {
                 health -= remainingDamage;
@@ -190,11 +208,9 @@ public class RobotBossBehaviour : MonoBehaviour
         // While the player remains inside the trigger, repeatedly attempt to attack.
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log("Player entered zone!");
-            if (swissHealthScript.invulnerable == false)
+            if (!damageInvulnerable && swissHealthScript.invulnerable == false)
             {
                 AttackPlayer();
-                Debug.Log("Player ATTACK!");
             }
         }
     }
@@ -204,7 +220,6 @@ public class RobotBossBehaviour : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             animator.SetBool("Attack", false);
-
         }
     }
 
@@ -221,7 +236,6 @@ public class RobotBossBehaviour : MonoBehaviour
         {
             animator.SetBool("CreateShield", true);
             Debug.Log("Boss is creating shieldAmount.");
-
             shieldAmount = 100;
 
             StartCoroutine(WaitForshieldAmountAnimation());
@@ -260,8 +274,16 @@ public class RobotBossBehaviour : MonoBehaviour
     public void MoveToTarget(Vector3 targetPosition)
     {
         Vector3 direction = targetPosition - transform.position;
-        Vector2 moveDir = direction.normalized;
-        rb.velocity = moveDir * moveSpeed;
+
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            Vector2 moveDir = direction.normalized;
+            rb.velocity = moveDir * moveSpeed;
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+        }
     }
 
     // ============================================================
@@ -276,6 +298,37 @@ public class RobotBossBehaviour : MonoBehaviour
         wireColor.a = 1f;
         Gizmos.color = wireColor;
         Gizmos.DrawWireCube(transform.position, boxSize);
+    }
+
+    IEnumerator DamageInvulnerability()
+    {
+        damageInvulnerable = true;
+        Debug.Log("Boss was hit! Player can walk through boss.");
+        // Stop boss movement immediately
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        // Stop AI movement/state
+        currentState = BossState.Idle;
+        // Ignore collision between Boss and Player
+        Physics2D.IgnoreLayerCollision(bossLayer, playerLayer, true);
+
+        // Optional: stop attack animation
+        if (animator != null)
+        {
+            animator.SetBool("Attack", false);
+        }
+
+        // Wait for invulnerability duration
+        yield return new WaitForSeconds(damageInvulnerabilityDuration);
+
+        // Allow Boss and Player to collide again
+        Physics2D.IgnoreLayerCollision(bossLayer, playerLayer, false);
+        damageInvulnerable = false;
+        Debug.Log("Boss can attack and collide with player again!");
     }
 
     IEnumerator WaitForshieldAmountAnimation()

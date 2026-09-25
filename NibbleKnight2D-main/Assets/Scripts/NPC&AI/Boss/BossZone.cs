@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static RobotBossBehaviour;
 
 public class BossZone : MonoBehaviour
 {
     public RobotBossBehaviour robotBoss; // Assign this in the inspector
+
+    public GameObject BossStatusDisplay;
+    public GameObject Wallup;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +28,9 @@ public class BossZone : MonoBehaviour
         {
             Debug.Log("Player detected!");
             // Call FaceTarget with the player's position
-            robotBoss.MoveToTarget(other.transform.position);
+
+            BossStatusDisplay.SetActive(true);
+            Wallup.SetActive(true);
         }
     }
 
@@ -34,7 +40,7 @@ public class BossZone : MonoBehaviour
         {
             Debug.Log("Player detected!");
             // Call FaceTarget with the player's position
-            robotBoss.MoveToTarget(collision.transform.position);
+
         }
     }
 }
