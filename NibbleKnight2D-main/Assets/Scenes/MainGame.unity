@@ -33872,6 +33872,10 @@ PrefabInstance:
       propertyPath: EnemySpiderMove
       value: 
       objectReference: {fileID: 1220750508}
+    - target: {fileID: 2217608068541240815, guid: 8e778344c630b934291fe1400b176295, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6545144500381361175, guid: 8e778344c630b934291fe1400b176295, type: 3}
       propertyPath: boxSize.x
       value: 8
@@ -33892,9 +33896,17 @@ PrefabInstance:
       propertyPath: path.Array.data[0]
       value: 
       objectReference: {fileID: 2132218145}
+    - target: {fileID: 7343045125883056486, guid: 8e778344c630b934291fe1400b176295, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7659289736629218927, guid: 8e778344c630b934291fe1400b176295, type: 3}
       propertyPath: m_Name
       value: '"Spider" 1'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659289736629218927, guid: 8e778344c630b934291fe1400b176295, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7659289736629218927, guid: 8e778344c630b934291fe1400b176295, type: 3}
       propertyPath: m_IsActive
@@ -35255,6 +35267,7 @@ MonoBehaviour:
   restartGameScript: {fileID: 0}
   flickerDuration: 1
   flickerInterval: 0.1
+  enemyLayerName: Enemy
   audioSource: {fileID: 0}
   audioTakeDamageClips: []
 --- !u!114 &1650689021
@@ -37134,7 +37147,7 @@ GameObject:
   - component: {fileID: 1795389273}
   m_Layer: 9
   m_Name: '''Boss'''
-  m_TagString: Untagged
+  m_TagString: EnemyNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37222,7 +37235,7 @@ MonoBehaviour:
   health: 100
   shieldAmount: 0
   hasShield: 0
-  boxSize: {x: 5.55, y: 3.77}
+  boxSize: {x: 18.68, y: 3.77}
   boxColor: {r: 0, g: 1, b: 0, a: 0.25}
   detectionLayer:
     serializedVersion: 2
@@ -47946,6 +47959,10 @@ PrefabInstance:
       propertyPath: EnemySpiderMove
       value: 
       objectReference: {fileID: 887535459}
+    - target: {fileID: 2217608068541240815, guid: 8e778344c630b934291fe1400b176295, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6545144500381361175, guid: 8e778344c630b934291fe1400b176295, type: 3}
       propertyPath: boxSize.x
       value: 8
@@ -47962,9 +47979,17 @@ PrefabInstance:
       propertyPath: path.Array.data[0]
       value: 
       objectReference: {fileID: 2005840865}
+    - target: {fileID: 7343045125883056486, guid: 8e778344c630b934291fe1400b176295, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7659289736629218927, guid: 8e778344c630b934291fe1400b176295, type: 3}
       propertyPath: m_Name
       value: '"Spider"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659289736629218927, guid: 8e778344c630b934291fe1400b176295, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7659289736629218927, guid: 8e778344c630b934291fe1400b176295, type: 3}
       propertyPath: m_IsActive
@@ -48248,11 +48273,11 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: cbef4f4a226dd7042b45fe9127337b07, type: 3}
     - target: {fileID: 1226832099098646075, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 138.8
+      value: 1.06
       objectReference: {fileID: 0}
     - target: {fileID: 1226832099098646075, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 148.2
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 1226832099098646075, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -48392,7 +48417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6724776824478989323, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_Distance
-      value: 1.7600724
+      value: 201.75496
       objectReference: {fileID: 0}
     - target: {fileID: 6866115948257113153, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: mainCamera

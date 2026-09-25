@@ -120,6 +120,15 @@ public class RobotBossBehaviour : MonoBehaviour
             case BossState.Dashing:
                 DashBackward();
                 break;
+
+            case BossState.Cooldown:
+                cooldownTimer -= Time.deltaTime;
+
+                if (cooldownTimer <= 0f)
+                {
+                    currentState = BossState.Idle;
+                }
+                break;
         }
 
         if (health <= 1)
@@ -150,11 +159,20 @@ public class RobotBossBehaviour : MonoBehaviour
         
         foreach (Collider2D hit in hits)
         {
+            // Detect Player
+            if (hit.gameObject.layer == playerLayer)
+            {
+                playerMouse = hit.gameObject;
+                Debug.Log("Player detected! Boss is moving.");
+                currentState = BossState.Moving;
+                return;
+            }
             // Currently, the only object type that causes a reaction is something on the "Grabable" layer. Which is the falling box.
             if (hit.gameObject.layer == LayerMask.NameToLayer("Grabable"))
             {
                 Debug.Log("Obstacle detected in zone!");
-                currentState = BossState.Dashing;
+                StartDash();
+                return;
             }
         }
     }
@@ -303,32 +321,39 @@ public class RobotBossBehaviour : MonoBehaviour
     IEnumerator DamageInvulnerability()
     {
         damageInvulnerable = true;
-        Debug.Log("Boss was hit! Player can walk through boss.");
-        // Stop boss movement immediately
+        Debug.Log("Boss was hit! Returning to Idle.");
         if (rb != null)
         {
             rb.velocity = Vector2.zero;
             rb.angularVelocity = 0f;
         }
 
-        // Stop AI movement/state
+        // Boss stops moving after taking damage
         currentState = BossState.Idle;
-        // Ignore collision between Boss and Player
-        Physics2D.IgnoreLayerCollision(bossLayer, playerLayer, true);
-
-        // Optional: stop attack animation
         if (animator != null)
         {
             animator.SetBool("Attack", false);
         }
 
-        // Wait for invulnerability duration
+        Physics2D.IgnoreLayerCollision(
+            bossLayer,
+            playerLayer,
+            true
+        );
+
         yield return new WaitForSeconds(damageInvulnerabilityDuration);
 
-        // Allow Boss and Player to collide again
-        Physics2D.IgnoreLayerCollision(bossLayer, playerLayer, false);
+        Physics2D.IgnoreLayerCollision(
+            bossLayer,
+            playerLayer,
+            false
+        );
+
         damageInvulnerable = false;
-        Debug.Log("Boss can attack and collide with player again!");
+        Debug.Log("Boss recovered. Checking for player again.");
+
+        // Check whether player is still inside the detection zone
+        CheckZone();
     }
 
     IEnumerator WaitForshieldAmountAnimation()

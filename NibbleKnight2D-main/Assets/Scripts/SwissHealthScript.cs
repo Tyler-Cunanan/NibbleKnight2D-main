@@ -30,6 +30,9 @@ public class SwissHealthScript : MonoBehaviour
     private bool isFlickering = false;
     private Coroutine flickerRoutine;
 
+    [SerializeField] private string enemyLayerName = "Enemy";
+    private int enemyLayer;
+
     [Header("Audio")]
     public AudioSource audioSource;
     public List<AudioClip> audioTakeDamageClips = new List<AudioClip>();
@@ -37,6 +40,7 @@ public class SwissHealthScript : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        enemyLayer = LayerMask.NameToLayer(enemyLayerName);
     }
     void Update()
     {
@@ -46,7 +50,6 @@ public class SwissHealthScript : MonoBehaviour
     public void SwissDamaged(float damageTaken, Transform enemyTransform = null)
     {
         m_SwissCurrentHealth -= damageTaken;
-        StartCoroutine(Flicker());
         if (m_SwissCurrentHealth <= 0)
         {
             m_SwissCurrentHealth = 0;
@@ -120,12 +123,17 @@ public class SwissHealthScript : MonoBehaviour
         playerRb.velocity = Vector2.zero; // Optional: cancel current motion
         playerRb.AddForce(knockback, ForceMode2D.Impulse);
         invulnerable = true;
+
+        // Ignore collision between player and Enemy layer
+        Physics2D.IgnoreLayerCollision(gameObject.layer, enemyLayer, true);
     }
 
     private IEnumerator ResetGetHit()
     {
         yield return new WaitForSeconds(3f);
         invulnerable = false;
+        // Enable collision again
+        Physics2D.IgnoreLayerCollision(gameObject.layer, enemyLayer, false);
     }
 
     private IEnumerator Flicker()
