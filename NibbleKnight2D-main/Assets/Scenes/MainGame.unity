@@ -34385,63 +34385,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1487429620 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3064846346381906234, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
-  m_PrefabInstance: {fileID: 4519579244281767197}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &1487429623
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487429620}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 100
-  m_Sprite: {fileID: 21300000, guid: c34f61b59b37df0408085c50f8cb5164, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &1494674844
 GameObject:
   m_ObjectHideFlags: 0
@@ -47798,12 +47741,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 882316689577853920, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 882316689577853920, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 882316689577853920, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.38
+      value: -0.194
       objectReference: {fileID: 0}
     - target: {fileID: 882316689577853920, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.95
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1104716666170418345, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: audioSource
@@ -47886,16 +47837,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2127654520884189746, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c34f61b59b37df0408085c50f8cb5164, type: 3}
+    - target: {fileID: 2127654520884189746, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127654520884189746, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 93
       objectReference: {fileID: 0}
     - target: {fileID: 3393417027476748093, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.22
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3393417027476748093, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3393417027476748093, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -47977,6 +47936,10 @@ PrefabInstance:
       propertyPath: m_PauseMenuUI
       value: 
       objectReference: {fileID: 1716431671}
+    - target: {fileID: 5328551579362692325, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
+      propertyPath: hookSpawnPoint
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6724776824478989323, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
       propertyPath: m_Distance
       value: 1.7600724
@@ -47996,10 +47959,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3064846346381906234, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1487429623}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67ae94c1946d3ad4baeb5505fd82803b, type: 3}
 --- !u!82 &4519579244281767198 stripped
 AudioSource:
